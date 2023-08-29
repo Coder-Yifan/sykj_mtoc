@@ -7,9 +7,9 @@ long_description = (cur_dir / "README.md").read_text(encoding="utf-8")
 version = (cur_dir / "m2cgen" / "VERSION.txt").read_text(encoding="utf-8").strip()
 
 setup(
-    name="m2cgen",
+    name="sykj_mtoc",
     version=version,
-    url="https://github.com/BayesWitnesses/m2cgen",
+    url="https://github.com/Coder-Yifan/sykj_mtoc.git",
     description="Code-generation for various ML models into native code.",
     long_description=long_description,
     long_description_content_type="text/markdown",

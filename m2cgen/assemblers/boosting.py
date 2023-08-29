@@ -7,10 +7,11 @@ from m2cgen import ast
 from m2cgen.assemblers import utils
 from m2cgen.assemblers.base import ModelAssembler
 from m2cgen.assemblers.linear import _linear_to_ast
+from xgboost import XGBClassifier
+from lightgbm import LGBMClassifier
 
 
 class BaseBoostingAssembler(ModelAssembler):
-
     classifier_names = {}
     multiclass_params_seq_len = 1
 
@@ -25,8 +26,8 @@ class BaseBoostingAssembler(ModelAssembler):
         model_class_name = type(model).__name__
         if model_class_name in self.classifier_names:
             self._is_classification = True
-            if model.n_classes_ > 2:
-                self._output_size = model.n_classes_
+            # if model.n_classes_ > 2:
+            #     self._output_size = model.n_classes_
 
     def assemble(self):
         if self._is_classification:
@@ -122,30 +123,50 @@ class BaseTreeBoostingAssembler(BaseBoostingAssembler):
 
 
 class XGBoostTreeModelAssembler(BaseTreeBoostingAssembler):
-
     classifier_names = {
         "XGBClassifier",
-        "XGBRFClassifier"
+        "XGBRFClassifier",
+        "Booster"
     }
 
     def __init__(self, model):
-        self.multiclass_params_seq_len = model.get_params().get("num_parallel_tree", 1)
-        feature_names = model.get_booster().feature_names
-        self._feature_name_to_idx = {
-            name: idx for idx, name in enumerate(feature_names or [])
-        }
+        if isinstance(model, XGBClassifier):
+            self.multiclass_params_seq_len = model.get_params().get("num_parallel_tree", 1)
+            feature_names = model.get_booster().feature_names
+            self._feature_name_to_idx = {
+                name: idx for idx, name in enumerate(feature_names or [])
+            }
 
-        model_dump = model.get_booster().get_dump(dump_format="json")
-        trees = [json.loads(d) for d in model_dump]
+            model_dump = model.get_booster().get_dump(dump_format="json")
+            trees = [json.loads(d) for d in model_dump]
 
-        # Limit the number of trees that should be used for
-        # assembling (if applicable).
-        best_ntree_limit = getattr(model, "best_ntree_limit", None)
+            # Limit the number of trees that should be used for
+            # assembling (if applicable).
+            best_ntree_limit = getattr(model, "best_ntree_limit", None)
 
-        super().__init__(model,
-                         trees,
-                         base_score=model.get_params()["base_score"],
-                         tree_limit=best_ntree_limit)
+            super().__init__(model,
+                             trees,
+                             base_score=model.get_params()["base_score"],
+                             tree_limit=best_ntree_limit)
+        else:
+            self.multiclass_params_seq_len = 1
+            feature_names = model.feature_names
+            self._feature_name_to_idx = {
+                name: idx for idx, name in enumerate(feature_names or [])
+            }
+
+            model_dump = model.get_dump(dump_format="json")
+            trees = [json.loads(d) for d in model_dump]
+
+            # Limit the number of trees that should be used for
+            # assembling (if applicable).
+            best_ntree_limit = None
+            config = json.loads(model.save_config())
+
+            super().__init__(model,
+                             trees,
+                             base_score=float(config['learner']['learner_model_param']["base_score"]),
+                             tree_limit=best_ntree_limit)
 
     def _assemble_tree(self, tree):
         if "leaf" in tree:
@@ -187,7 +208,6 @@ class XGBoostTreeModelAssembler(BaseTreeBoostingAssembler):
 
 
 class XGBoostLinearModelAssembler(BaseBoostingAssembler):
-
     classifier_names = {"XGBClassifier"}
 
     def __init__(self, model):
@@ -204,7 +224,11 @@ class XGBoostLinearModelAssembler(BaseBoostingAssembler):
 class XGBoostModelAssemblerSelector(ModelAssembler):
 
     def __init__(self, model, *args, **kwargs):
-        model_dump = model.get_booster().get_dump(dump_format="json")
+        super().__init__(model)
+        if isinstance(model, XGBClassifier):
+            model_dump = model.get_booster().get_dump(dump_format="json")
+        else:
+            model_dump = model.get_dump(dump_format="json")
         if len(model_dump) == 1 and all(i in json.loads(model_dump[0]) for i in ("weight", "bias")):
             self.assembler = XGBoostLinearModelAssembler(model)
         else:
@@ -215,11 +239,13 @@ class XGBoostModelAssemblerSelector(ModelAssembler):
 
 
 class LightGBMModelAssembler(BaseTreeBoostingAssembler):
-
-    classifier_names = {"LGBMClassifier"}
+    classifier_names = {"LGBMClassifier", "Booster"}
 
     def __init__(self, model):
-        model_dump = model.booster_.dump_model()
+        if isinstance(model, LGBMClassifier):
+            model_dump = model.booster_.dump_model()
+        else:
+            model_dump = model.dump_model()
         trees = [m["tree_structure"] for m in model_dump["tree_info"]]
 
         self.n_iter = len(trees) // model_dump["num_tree_per_iteration"]
@@ -350,5 +376,5 @@ def _split_estimator_params_by_classes(values, n_classes, params_seq_len):
         [[indices[i:i + params_seq_len]
           for i in range(j, values_len, block_len)]
          for j in range(0, block_len, params_seq_len)]
-        ).reshape(n_classes, -1)
+    ).reshape(n_classes, -1)
     return [[values[idx] for idx in class_idxs] for class_idxs in indices_by_class]

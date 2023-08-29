@@ -458,3 +458,7 @@ def _export(model, interpreter):
     assembler_cls = get_assembler_cls(model)
     model_ast = assembler_cls(model).assemble()
     return interpreter.interpret(model_ast)
+
+def _export_model_score():
+    pass
+
