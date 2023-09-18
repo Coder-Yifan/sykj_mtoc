@@ -33,7 +33,7 @@ def export_to_java(model, package_name=None, class_name="Model", indent=4,
     return _export(model, interpreter)
 
 
-def export_to_python(model, indent=4, function_name="score"):
+def export_to_python(model, indent=4, function_name="score", features=None):
     """
     Generates a Python code representation of the given model.
 
@@ -54,7 +54,9 @@ def export_to_python(model, indent=4, function_name="score"):
         indent=indent,
         function_name=function_name
     )
-    return _export(model, interpreter)
+    code = _export(model, interpreter)
+    code += "features = " + str(features)
+    return code
 
 
 def export_to_c(model, indent=4, function_name="score"):
@@ -459,6 +461,6 @@ def _export(model, interpreter):
     model_ast = assembler_cls(model).assemble()
     return interpreter.interpret(model_ast)
 
+
 def _export_model_score():
     pass
-
