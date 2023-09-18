@@ -55,7 +55,8 @@ def export_to_python(model, indent=4, function_name="score", features=None):
         function_name=function_name
     )
     code = _export(model, interpreter)
-    code += "features = " + str(features)
+    if features is not None:
+        code += "features = " + str(features)
     return code
 
 
