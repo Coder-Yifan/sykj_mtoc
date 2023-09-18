@@ -1,9 +1,9 @@
 import numpy as np
 import xgboost as xgb
 
-from m2cgen import ast
-from m2cgen.assemblers import XGBoostModelAssemblerSelector
-from m2cgen.assemblers.utils import apply_op_to_expressions
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import XGBoostModelAssemblerSelector
+from sykj_mtoc.assemblers.utils import apply_op_to_expressions
 
 from tests import utils
 

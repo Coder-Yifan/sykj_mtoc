@@ -2,7 +2,7 @@ import numpy as np
 import pytest
 from sklearn import linear_model
 
-from m2cgen import assemblers, ast
+from sykj_mtoc import assemblers, ast
 
 from tests.utils import cmp_exprs
 

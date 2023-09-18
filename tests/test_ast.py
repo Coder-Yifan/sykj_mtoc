@@ -3,7 +3,7 @@ from copy import deepcopy
 import numpy as np
 import pytest
 
-from m2cgen import ast
+from sykj_mtoc import ast
 
 
 def test_count_exprs():

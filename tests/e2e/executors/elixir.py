@@ -1,7 +1,7 @@
 import subprocess
 
-from m2cgen.assemblers import get_assembler_cls
-from m2cgen.interpreters import ElixirInterpreter
+from sykj_mtoc.assemblers import get_assembler_cls
+from sykj_mtoc.interpreters import ElixirInterpreter
 
 from tests import utils
 from tests.e2e.executors.base import BaseExecutor

@@ -1,7 +1,7 @@
 from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor
 
-from m2cgen import ast
-from m2cgen.assemblers import TreeModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import TreeModelAssembler
 
 from tests.utils import cmp_exprs
 

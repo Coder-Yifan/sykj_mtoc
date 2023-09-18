@@ -1,4 +1,4 @@
-from m2cgen import ast
+from sykj_mtoc import ast
 
 
 def _create_expected_svm_single_output_ast(coef, intercept, kernels_ast):

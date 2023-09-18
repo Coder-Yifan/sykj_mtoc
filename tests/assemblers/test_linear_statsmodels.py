@@ -3,7 +3,7 @@ import pytest
 import statsmodels.api as sm
 from statsmodels.regression.process_regression import ProcessMLE
 
-from m2cgen import assemblers, ast
+from sykj_mtoc import assemblers, ast
 
 from tests import utils
 

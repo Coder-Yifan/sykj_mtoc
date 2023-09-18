@@ -1,7 +1,7 @@
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 
-from m2cgen import ast
-from m2cgen.assemblers import RandomForestModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import RandomForestModelAssembler
 
 from tests.utils import cmp_exprs
 

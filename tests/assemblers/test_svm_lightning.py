@@ -1,8 +1,8 @@
 import numpy as np
 from lightning.classification import KernelSVC
 
-from m2cgen import ast
-from m2cgen.assemblers import LightningSVMModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import LightningSVMModelAssembler
 
 from tests.assemblers import utils
 from tests.utils import cmp_exprs

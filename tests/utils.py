@@ -22,9 +22,9 @@ from sklearn.svm._base import BaseLibSVM
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.tree._classes import BaseDecisionTree
 
-from m2cgen import ast
-from m2cgen.assemblers import _get_full_model_name
-from m2cgen.interpreters.utils import format_float
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import _get_full_model_name
+from sykj_mtoc.interpreters.utils import format_float
 
 
 class StatsmodelsSklearnLikeWrapper(BaseEstimator, RegressorMixin):

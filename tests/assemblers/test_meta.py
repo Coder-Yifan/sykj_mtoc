@@ -3,8 +3,8 @@ from sklearn.dummy import DummyRegressor
 from sklearn.linear_model import RANSACRegressor
 from sklearn.tree import DecisionTreeRegressor
 
-from m2cgen import ast
-from m2cgen.assemblers import RANSACModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import RANSACModelAssembler
 
 from tests.utils import cmp_exprs
 

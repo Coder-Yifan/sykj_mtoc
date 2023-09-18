@@ -16,7 +16,7 @@ import lightgbm as lgb
 import xgboost as xgb
 from sklearn import ensemble, linear_model, svm, tree
 
-import m2cgen as m2c
+import sykj_mtoc as m2c
 
 from tests import utils
 

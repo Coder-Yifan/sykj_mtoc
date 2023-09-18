@@ -2,7 +2,7 @@ from os import environ
 from pathlib import Path
 from shutil import copyfile
 
-from m2cgen import export_to_java
+from sykj_mtoc import export_to_java
 
 from tests import utils
 from tests.e2e.executors.base import BaseExecutor

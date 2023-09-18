@@ -2,8 +2,8 @@ import lightgbm as lgb
 import numpy as np
 import pytest
 
-from m2cgen import ast
-from m2cgen.assemblers import LightGBMModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import LightGBMModelAssembler
 
 from tests import utils
 

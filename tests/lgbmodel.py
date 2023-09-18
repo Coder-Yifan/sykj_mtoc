@@ -1,7 +1,7 @@
 import pandas as pd
 import lightgbm as lgb
 
-from m2cgen import export_to_python
+from sykj_mtoc import export_to_python
 data = pd.read_csv('./uci_credit.csv')
 features = [x for x in data.columns.tolist() if x not in ['ID','default.payment.next.month']]
 data['y'] = data['default.payment.next.month']

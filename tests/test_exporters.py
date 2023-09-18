@@ -1,4 +1,4 @@
-from m2cgen import exporters
+from sykj_mtoc import exporters
 
 
 def test_export_to_java(trained_model):

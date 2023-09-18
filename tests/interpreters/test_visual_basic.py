@@ -2,8 +2,8 @@ from itertools import product
 
 import pytest
 
-from m2cgen import ast
-from m2cgen.interpreters import VisualBasicInterpreter
+from sykj_mtoc import ast
+from sykj_mtoc.interpreters import VisualBasicInterpreter
 
 from tests.utils import assert_code_equal
 

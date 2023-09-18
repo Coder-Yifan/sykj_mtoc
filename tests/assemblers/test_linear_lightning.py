@@ -1,7 +1,7 @@
 from lightning.classification import AdaGradClassifier
 from lightning.regression import AdaGradRegressor
 
-from m2cgen import assemblers, ast
+from sykj_mtoc import assemblers, ast
 
 from tests import utils
 

@@ -1,5 +1,5 @@
-from m2cgen.assemblers import get_assembler_cls
-from m2cgen.interpreters import VisualBasicInterpreter
+from sykj_mtoc.assemblers import get_assembler_cls
+from sykj_mtoc.interpreters import VisualBasicInterpreter
 
 from tests import utils
 from tests.e2e.executors.base import BaseExecutor

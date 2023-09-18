@@ -4,7 +4,7 @@ from unittest import mock
 
 from _pytest import capture
 
-from m2cgen import __version__, cli
+from sykj_mtoc import __version__, cli
 
 from tests.utils import verify_python_model_is_expected
 

@@ -1,5 +1,5 @@
-from m2cgen.assemblers import get_assembler_cls
-from m2cgen.interpreters import RInterpreter
+from sykj_mtoc.assemblers import get_assembler_cls
+from sykj_mtoc.interpreters import RInterpreter
 
 from tests import utils
 from tests.e2e.executors.base import BaseExecutor

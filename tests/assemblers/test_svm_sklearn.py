@@ -2,8 +2,8 @@ import numpy as np
 import pytest
 from sklearn.svm import SVC
 
-from m2cgen import ast
-from m2cgen.assemblers import SklearnSVMModelAssembler
+from sykj_mtoc import ast
+from sykj_mtoc.assemblers import SklearnSVMModelAssembler
 
 from tests.assemblers import utils
 from tests.utils import cmp_exprs

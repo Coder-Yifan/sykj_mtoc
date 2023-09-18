@@ -1,5 +1,5 @@
-from m2cgen.assemblers import get_assembler_cls
-from m2cgen.interpreters import PythonInterpreter
+from sykj_mtoc.assemblers import get_assembler_cls
+from sykj_mtoc.interpreters import PythonInterpreter
 
 from tests.e2e.executors.base import BaseExecutor
 from tests.utils import write_content_to_file
