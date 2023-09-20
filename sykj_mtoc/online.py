@@ -49,14 +49,23 @@ class RequstModel():
             raise Exception('data shoule be a DataFrame!!')
         features_online = data.columns.tolist()
         results = []
+        acc_index = []
         id_col = {'modelUuid': self.modelUuid, 'version': self.version, 'modelType': self.modelType,
                   'seqId': '2023'}
-        for index in range(data.shape[0]):
-            request_json = dict(zip(features_online, [str(x) for x in data.iloc[index, :].values]))
+        for index in data.index:
+            request_json = dict(zip(features_online, [str(x) for x in data.loc[index, :].values]))
             id_col.update(request_json)
             r_reg = requests.post(url=self.url, json=id_col)
             response = r_reg.json().get('data')
-            if not response:
-                raise Exception('{} index error'.format(index) + r_reg.json().get('message'))
-            results.append(r_reg.json().get('data'))
-        return DataFrame.from_dict(results)
+            try:
+                if not response:
+                    raise Exception('{} index error'.format(index) + r_reg.json().get('message'))
+                results.append(r_reg.json().get('data'))
+                acc_index.append(index)
+            except:
+                print('{} index error'.format(index) + r_reg.json().get('message'))
+                continue
+        result_df = DataFrame.from_dict(results)
+        result_df['index'] = acc_index
+        result_df.set_index('index', drop=True, inplace=True)
+        return result_df
