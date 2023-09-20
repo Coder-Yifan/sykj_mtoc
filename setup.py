@@ -4,7 +4,7 @@ from setuptools import find_packages, setup
 
 cur_dir = Path(__file__).absolute().parent
 long_description = (cur_dir / "README.md").read_text(encoding="utf-8")
-version = "1.0.0"
+version = "1.1.1"
 
 setup(
     name="sykj_mtoc",
@@ -27,7 +27,7 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",

@@ -33,23 +33,26 @@ def export_to_java(model, package_name=None, class_name="Model", indent=4,
     return _export(model, interpreter)
 
 
-def export_to_python(model, indent=4, function_name="score", features=None):
+def export_to_python(model, features=None, function_name="score"):
     """
-    Generates a Python code representation of the given model.
+    根据模型生成python代码，支持XGBClassifier,xgbmodel,LgbClassifier
 
     Parameters
     ----------
     model : object
-        The model object that should be transpiled into code.
-    indent : int, optional
-        The size of indents in the generated code.
+        模型
+    features : string list，optional
+        变量列表
     function_name : string, optional
-        Name of the function in the generated code.
+        预测方法名
+
+
 
     Returns
     -------
     code : string
     """
+    indent = 4
     interpreter = interpreters.PythonInterpreter(
         indent=indent,
         function_name=function_name
