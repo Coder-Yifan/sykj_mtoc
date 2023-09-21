@@ -47,7 +47,7 @@ class RequstModel():
         """
         if not isinstance(data, DataFrame):
             raise Exception('data shoule be a DataFrame!!')
-        features_online = data.columns.tolist()
+        features_online = data.columns.tolist() if not features_online else features_online
         results = []
         acc_index = []
         id_col = {'modelUuid': self.modelUuid, 'version': self.version, 'modelType': self.modelType,
